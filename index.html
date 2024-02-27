@@ -10,8 +10,32 @@
         <div>
             <button id="startButton"> Create audio context </button>
             <button id="babblingBrookButton"> Play Babbling Brook </button>
-            <button id="beepButton"> Play Beeping Sound </button>
+            <button id="alarmButton"> Play Alarm Sound </button>
             <button id="ballBounceButton"> Play Ball Bounce </button>
+        </div>
+        <br/>
+        <div>
+            May need to raise volume for Babbling Brook
+            <h3> Part II Blog </h3>
+            <img src="part2.png"> <br/>
+            For part 2, I replicated the ball bounce sound in Designing Sound. <br/>
+            There are two major parts to the code. <br/>
+            <br/>
+            The first part is the frequency modulator, which simulates the "bounce" by alternating between turning on the frequency of the oscillator (when it hits the ground),
+            and zeroing the frequency (when it is in the air). <br/>
+            As the ball bounces, the interval between the bounces becomes smaller and smaller. <br/>
+            My work around for this was to use a setInterval() function and modify the intervalDuration dynamically. <br/>
+            This allowed me to emulate the initially slow bounce of the ball to the rapid and small bounces towards the end. <br/>
+            As the ball comes to a halt, I ramp the gain to zero for a smooth transition into silence. <br/>
+            <br/>
+            The second part was the ADSR envelope for the impact sound. <br/>
+            I connected a gain node holding the ADSR envelope to another gain node to which the oscillator was connected to.<br/>
+            In this way, I tried to add more realistic details to the short beat from when the ball comes into contact with the ground until it goes back up into the air. <br/>
+            <br/>
+            Overall, it was an interesting experience creating a sound from scratch. <br/>
+            I was able to learn just how much detail and thought need to be put into one simple sound. <br/>
+            <br/>
+            (I threw in an alarm sound as well for fun!)
         </div>
     </body>
 

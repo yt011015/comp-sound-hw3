@@ -5,12 +5,12 @@ const maxOverallGain = 0.8;
 var rhpf;
 const startButton = document.querySelector("#startButton");
 const babblingBrookButton = document.querySelector("#babblingBrookButton");
-const beepButton = document.querySelector("#beepButton");
+const alarmButton = document.querySelector("#alarmButton");
 const ballBounceButton = document.querySelector("#ballBounceButton");
 
 startButton.addEventListener("click", initializeAudioContext, false); 
 babblingBrookButton.addEventListener("click", babblingBrook, false); 
-beepButton.addEventListener("click", createBeep, false); 
+alarmButton.addEventListener("click", createAlarm, false); 
 ballBounceButton.addEventListener("click", ballBounce, false);
 
 function initializeAudioContext() {
@@ -96,9 +96,9 @@ function updateGlobalGain() {
     globalGain.gain.setValueAtTime(newGlobalGain, audioCtx.currentTime);
 }
 
-function createBeep() {
+function createAlarm() {
     const osc = audioCtx.createOscillator();
-    osc.frequency.value = 700;
+    osc.frequency.value = 800;
 
     const gainNode = audioCtx.createGain();
     gainNode.gain.value = 0.2;
@@ -111,17 +111,20 @@ function createBeep() {
     let count = 0;
     function modulateFrequency() {
         count++;
-
-        if (count % 3 === 0) {
-            osc.frequency.setValueAtTime(700, audioCtx.currentTime); // Set frequency
-        } else if (count % 3 == 1) {
-            osc.frequency.setValueAtTime(500, audioCtx.currentTime); // Set modulated frequency
-        } else if (count % 3 == 2) {
-            osc.frequency.setValueAtTime(200, audioCtx.currentTime); // Set modulated frequency
+        if (count % 5 === 0) {
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
+        } else if (count % 5== 1) {
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime); 
+        } else if (count % 5 == 2) {
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime); 
+        } else if (count % 5 == 3) {
+            osc.frequency.setValueAtTime(200, audioCtx.currentTime); 
+        } else {
+            osc.frequency.setValueAtTime(100, audioCtx.currentTime); 
         }
     }
 
-    interval = setInterval(modulateFrequency, 200);
+    interval = setInterval(modulateFrequency, 150);
 
     setTimeout(() => {
         gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.2);
@@ -154,8 +157,8 @@ function ballBounce() {
         const decayTime = 0.1;
         const envelope = audioCtx.createGain();
         envelope.gain.setValueAtTime(0, audioCtx.currentTime);
-        envelope.gain.setValueAtTime(0.5, audioCtx.currentTime); // Attack
-        envelope.gain.setTargetAtTime(0.2, audioCtx.currentTime + attackTime, decayTime); // Decay
+        envelope.gain.setValueAtTime(0.5, audioCtx.currentTime)
+        envelope.gain.setTargetAtTime(0.2, audioCtx.currentTime + attackTime, decayTime);
         return envelope;
     }
 
